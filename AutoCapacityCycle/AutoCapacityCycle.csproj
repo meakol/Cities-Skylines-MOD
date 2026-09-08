@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- 天际线一代使用的是 .NET Framework 3.5 -->
+    <TargetFramework>net35</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>AutoCapacityCycle</AssemblyName>
+    <RootNamespace>AutoCapacityCycle</RootNamespace>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <!-- 游戏 / 运行时提供的引用（Private=false：不复制进输出目录，运行时由游戏进程或 CitiesHarmony MOD 提供） -->
+  <ItemGroup>
+    <Reference Include="ICities">
+      <HintPath>Libs\ICities.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>Libs\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>Libs\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ColossalManaged">
+      <HintPath>Libs\ColossalManaged.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="CitiesHarmony.Harmony">
+      <HintPath>Libs\CitiesHarmony.Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- .NET Framework 自带程序集 -->
+  <ItemGroup>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <!-- CitiesHarmony.API：需要随 MOD 输出 -->
+  <ItemGroup>
+    <Reference Include="CitiesHarmony.API">
+      <HintPath>Libs\CitiesHarmony.API.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- 构建后自动部署到游戏本地 MOD 目录（仅需要本 MOD dll + CitiesHarmony.API.dll） -->
+  <Target Name="DeployAfterBuild" AfterTargets="Build">
+    <PropertyGroup>
+      <DeployDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\AutoCapacityCycle</DeployDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(DeployDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DeployDir)" />
+    <Copy SourceFiles="$(TargetDir)CitiesHarmony.API.dll" DestinationFolder="$(DeployDir)" />
+    <Message Importance="high" Text="[AutoCapacityCycle] 已部署到 $(DeployDir)" />
+  </Target>
+
+</Project>

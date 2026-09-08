@@ -1,0 +1,21 @@
+# === 本仓库当前只纳入 AutoCapacityCycle；其它工作区子目录暂不上传 ===
+/MoreTransportLines/
+/MultiLevelDistricts/
+/Reference/
+
+# === 构建输出 ===
+bin/
+obj/
+
+# === 第三方 / 游戏引用程序集（版权原因不随源码分发）===
+Libs/
+*.dll
+*.pdb
+
+# === IDE / 系统临时文件 ===
+.vs/
+*.user
+*.suo
+*.log
+Desktop.ini
+Thumbs.db
