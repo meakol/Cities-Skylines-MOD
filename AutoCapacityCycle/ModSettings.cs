@@ -23,6 +23,10 @@ namespace AutoCapacityCycle
             // 公墓开关（仅 m_graveCount > 0 的 CemeteryAI 即“公墓”，火葬场不受影响）
             [XmlElement("AutoEmptyCemeteries")]
             public bool AutoEmptyCemeteries = true;
+
+            // 界面语言：0=自动（跟随游戏语言），1=简体中文，2=English
+            [XmlElement("Language")]
+            public int LanguageMode;
         }
 
         private static Data s_data;
@@ -37,6 +41,12 @@ namespace AutoCapacityCycle
         public static bool AutoEmptyCemeteries
         {
             get { return s_data == null || s_data.AutoEmptyCemeteries; }
+        }
+
+        // 界面语言：0=自动，1=中文，2=English（未加载配置时为 0=自动）
+        public static int LanguageMode
+        {
+            get { return s_data == null ? 0 : s_data.LanguageMode; }
         }
 
         public static void EnsureLoaded()
@@ -88,6 +98,25 @@ namespace AutoCapacityCycle
                 return;
             }
             s_data.AutoEmptyCemeteries = value;
+            Save();
+        }
+
+        public static void SetLanguageMode(int value)
+        {
+            EnsureLoaded();
+            if (value < 0)
+            {
+                value = 0;
+            }
+            else if (value > 2)
+            {
+                value = 2;
+            }
+            if (s_data.LanguageMode == value)
+            {
+                return;
+            }
+            s_data.LanguageMode = value;
             Save();
         }
 
