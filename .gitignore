@@ -19,3 +19,7 @@ Libs/
 *.log
 Desktop.ini
 Thumbs.db
+
+# 临时构建日志 / 杂项
+/tmp_build*.txt
+*.tmp
